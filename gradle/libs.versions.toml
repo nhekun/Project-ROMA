@@ -1,0 +1,82 @@
+[versions]
+# Build tools
+agp = "8.6.0"
+kotlin = "2.0.21"
+jvmTarget = "21"
+
+# AndroidX - Core
+coreKtx = "1.13.1"
+activityCompose = "1.9.2"
+material3 = "1.12.0"
+lifecycle = "2.8.7"
+
+# Compose
+composeBom = "2024.09.00"
+composeCompiler = "1.5.14"
+
+# Testing - JUnit 5 (replaces JUnit 4)
+junit = "5.11.0"
+junitJupiter = "5.11.0"
+kotlinTest = "2.0.21"
+espresso = "3.6.1"
+androidxJunit = "1.2.1"
+androidxRunner = "1.6.1"
+androidxRules = "1.6.1"
+
+# Other
+material = "1.12.0"
+
+[libraries]
+# Build plugins
+android-application = { module = "com.android.application", version.ref = "agp" }
+android-library = { module = "com.android.library", version.ref = "agp" }
+kotlin-android = { module = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-jvm = { module = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+
+# AndroidX Core
+core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+
+# Material3
+material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+
+# Compose (using BOM for version alignment)
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+compose-ui = { module = "androidx.compose.ui:ui" }
+compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
+compose-ui-text = { module = "androidx.compose.ui:ui-text" }
+compose-foundation = { module = "androidx.compose.foundation:foundation" }
+compose-compiler = { module = "org.jetbrains.kotlin:kotlin-compose-compiler-plugin", version.ref = "composeCompiler" }
+
+# Lifecycle
+lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
+lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycle" }
+lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
+lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+
+# Testing - JUnit 5 (modern replacement for JUnit 4)
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junitJupiter" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiter" }
+junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junitJupiter" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlinTest" }
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlinTest" }
+
+# Android Testing
+androidx-junit = { module = "androidx.test.ext:junit", version.ref = "androidxJunit" }
+androidx-runner = { module = "androidx.test:runner", version.ref = "androidxRunner" }
+androidx-rules = { module = "androidx.test:rules", version.ref = "androidxRules" }
+espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
+espresso-intents = { module = "androidx.test.espresso:espresso-intents", version.ref = "espresso" }
+
+[bundles]
+androidx-compose = ["compose-ui", "compose-ui-graphics", "compose-ui-text", "compose-foundation"]
+androidx-lifecycle = ["lifecycle-runtime-ktx", "lifecycle-livedata-ktx", "lifecycle-runtime-compose", "lifecycle-viewmodel-compose"]
+test-junit5 = ["junit-jupiter-api", "junit-jupiter-engine", "junit-jupiter-params", "kotlin-test", "kotlin-test-junit"]
+android-test = ["androidx-junit", "androidx-runner", "androidx-rules", "espresso-core", "espresso-intents"]
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

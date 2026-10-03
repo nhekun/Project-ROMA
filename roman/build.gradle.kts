@@ -1,14 +1,12 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm")
+    alias(libs.plugins.kotlin.jvm)
 }
 
 group = "com.roma.roman"
 version = "1.0.0"
 
 dependencies {
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.jetbrains.kotlin:kotlin-test:1.9.24")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.24")
+    testImplementation(libs.bundles.test.junit5)
 }
 
 kotlin {
@@ -17,6 +15,6 @@ kotlin {
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).configureEach {
     kotlinOptions {
-        jvmTarget = "21"
+        jvmTarget = libs.versions.jvmTarget.get()
     }
 }
