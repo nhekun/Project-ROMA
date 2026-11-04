@@ -100,3 +100,42 @@ class RomanConverterTest {
         RomanConverter.toRoman(4000)
     }
 }
+
+class RomanFormatterTest {
+
+    @Test
+    fun `formatRange should return start-end format`() {
+        assertEquals("Ⅰ-Ⅹ", RomanFormatter.formatRange(1, 10))
+        assertEquals("Ⅹ-ⅩⅤ", RomanFormatter.formatRange(10, 15))
+        assertEquals("Ⅿ-ⅯⅯ", RomanFormatter.formatRange(1000, 2000))
+    }
+
+    @Test
+    fun `toArabic should convert Roman numerals to integers`() {
+        assertEquals(0, RomanFormatter.toArabic("N"))
+        assertEquals(1, RomanFormatter.toArabic("Ⅰ"))
+        assertEquals(4, RomanFormatter.toArabic("ⅠⅤ"))
+        assertEquals(9, RomanFormatter.toArabic("ⅠⅩ"))
+        assertEquals(40, RomanFormatter.toArabic("ⅩⅬ"))
+        assertEquals(90, RomanFormatter.toArabic("ⅩⅭ"))
+        assertEquals(400, RomanFormatter.toArabic("ⅭⅮ"))
+        assertEquals(900, RomanFormatter.toArabic("ⅭⅯ"))
+        assertEquals(2026, RomanFormatter.toArabic("ⅯⅯⅩⅩⅤⅠ"))
+        assertEquals(3999, RomanFormatter.toArabic("ⅯⅯⅯⅭⅯⅩⅭⅠⅩ"))
+    }
+
+    @Test
+    fun `toArabic should return -1 for invalid input`() {
+        assertEquals(-1, RomanFormatter.toArabic(""))
+        assertEquals(-1, RomanFormatter.toArabic("INVALID"))
+        assertEquals(-1, RomanFormatter.toArabic("ⅠⅠⅠⅠ")) // Invalid repetition
+    }
+
+    @Test
+    fun `formatTwoDigit should zero-pad`() {
+        assertEquals("Ⅰ", RomanFormatter.formatTwoDigit(1))
+        assertEquals("ⅠⅠ", RomanFormatter.formatTwoDigit(2))
+        assertEquals("Ⅹ", RomanFormatter.formatTwoDigit(10))
+        assertEquals("ⅩⅤ", RomanFormatter.formatTwoDigit(15))
+    }
+}

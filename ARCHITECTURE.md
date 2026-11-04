@@ -27,6 +27,12 @@ RomanConverter.toRoman(int) → String
 
 RomanFormatter.formatTwoDigit(int) → String
     └─ Zero-pads: 3 → "III", 12 → "XII"
+
+RomanFormatter.formatRange(int, int) → String
+    └─ Range format: 1, 10 → "I-X"
+
+RomanFormatter.toArabic(String) → Int
+    └─ Reverse conversion for accessibility: "X" → 10
 ```
 
 ## UI Component Tree
@@ -99,12 +105,18 @@ implementation("androidx.activity:activity-compose:1.8.2")
 ./gradlew.bat :launcher:connectedDebugAndroidTest
 ```
 
-## Known Technical Debt
+## Known Technical Debt (Remaining)
 
-1. **lifecycle-livedata-compose** - Version doesn't exist in 2.7.0; using `lifecycle-viewmodel-compose` which transitively provides `observeAsState`
-2. **targetSdk deprecation** - Library modules use deprecated `targetSdk` property
-3. **Icon loading** - No caching, reloads on every drawer open
-4. **No DI** - ViewModels created via default factory
+1. **No DI** - ViewModels created via default factory (acceptable for Stage I scope)
+2. **JDK 25 incompatibility** - Build requires JDK 21; Gradle 8.7/Kotlin 1.9.24 don't support JDK 25
+
+## Resolved in Stage I
+
+- ✅ **lifecycle-livedata-compose** - Cleaned up dependencies; using Compose BOM for version management
+- ✅ **targetSdk deprecation** - Removed from library modules (ui, launcher)
+- ✅ **Icon loading** - Added caching by package name in AppIcon composable
+- ✅ **Accessibility** - Added content descriptions with spoken-number conversion
+- ✅ **Adaptive grid** - App drawer uses GridCells.Adaptive instead of hardcoded 4 rows
 
 ---
 

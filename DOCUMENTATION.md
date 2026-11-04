@@ -143,7 +143,7 @@ app → launcher → ui → roman
 ```
 
 ### Known Build Issue
-`androidx.lifecycle:lifecycle-livedata-compose` artifact versioning mismatch. Currently using `lifecycle-viewmodel-compose:2.7.0` which includes observeAsState. The separate `lifecycle-livedata-compose` artifact doesn't exist in 2.6.x/2.7.x versions.
+Build requires JDK 21. Current environment has JDK 25 (JetBrains Runtime from Android Studio) which is incompatible with Gradle 8.7 / Kotlin 1.9.24. Use JDK 21 for successful builds.
 
 ---
 
@@ -158,14 +158,23 @@ app → launcher → ui → roman
 
 ## Next Steps (Stage II+)
 
-- [ ] Fix `lifecycle-livedata-compose` dependency (use BOM or correct version)
 - [ ] Complete app drawer functionality (search, categories)
 - [ ] Add settings screen (all numbers in Roman)
 - [ ] Notification badges in Roman numerals
 - [ ] Widget support
-- [ ] Performance optimization (icon caching)
 - [ ] Landscape/tablet layouts
-- [ ] Accessibility (content descriptions for Roman numerals)
+- [ ] Performance optimization (icon caching) — *DONE: caching by package name*
+
+---
+
+## Completed in Stage I (Post-MVP Polish)
+
+- [x] Fix `lifecycle-livedata-compose` dependency (BOM-managed versions)
+- [x] Performance optimization (icon caching)
+- [x] Accessibility (content descriptions for Roman numerals)
+- [x] Adaptive app drawer grid
+- [x] Removed deprecated targetSdk from library modules
+- [x] Added formatRange() and toArabic() to RomanFormatter
 
 ---
 

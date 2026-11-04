@@ -24,15 +24,15 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.observeAsState
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.asPainter
 import androidx.compose.ui.graphics.toBitmap
-import androidx.compose.ui.graphics.toPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextOverflow
@@ -48,6 +48,7 @@ import com.roma.ui.RomaTheme
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.clickable
+import androidx.compose.ui.graphics.painter.Painter
 
 @Composable
 fun HomeScreen() {
@@ -135,11 +136,11 @@ fun DockAppIcon(app: AppModel) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.size(64.dp)
     ) {
-        AppIcon(icon = app.icon, modifier = Modifier.size(48.dp))
+        AppIcon(app = app, modifier = Modifier.size(48.dp))
         Text(
             text = app.label,
-            fontSize = 12.sp,
-            color = androidx.compose.ui.graphics.Color.White,
+            style = androidx.compose.material3.MaterialTheme.typography.labelLarge,
+            color = Color.White,
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -150,15 +151,17 @@ fun DockAppIcon(app: AppModel) {
 
 @Composable
 fun AppIcon(
-    icon: android.graphics.drawable.Drawable,
+    app: AppModel,
     modifier: Modifier = Modifier
 ) {
-    val bitmap = remember { icon.toBitmap() }
+    // Cache bitmap by package name to avoid re-decoding on every recomposition
+    val bitmap = remember(app.packageName) { app.icon.toBitmap() }
     val imageBitmap = remember(bitmap) { bitmap.asImageBitmap() }
-    Image(
+    androidx.compose.foundation.Image(
         painter = imageBitmap.asPainter(),
-        contentDescription = null,
+        contentDescription = app.label,
         contentScale = ContentScale.Fit,
+        colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(Color.White),
         modifier = modifier
     )
 }
@@ -190,15 +193,14 @@ fun AppDrawer(
             // Header
             Text(
                 text = "APPS",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
+                style = androidx.compose.material3.MaterialTheme.typography.displayMedium,
                 color = Color.White,
                 modifier = Modifier.padding(bottom = 24.dp)
             )
             
-            // App grid
+            // App grid - adaptive rows based on available height
             LazyHorizontalGrid(
-                rows = GridCells.Fixed(4),
+                rows = GridCells.Adaptive(120.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp),
@@ -221,10 +223,10 @@ fun AppDrawerItem(app: AppModel, onClick: (AppModel) -> Unit) {
             .wrapContentSize()
             .clickable { onClick(app) }
     ) {
-        AppIcon(icon = app.icon, modifier = Modifier.size(64.dp))
+        AppIcon(app = app, modifier = Modifier.size(64.dp))
         Text(
             text = app.label,
-            fontSize = 12.sp,
+            style = androidx.compose.material3.MaterialTheme.typography.labelLarge,
             color = Color.White,
             textAlign = TextAlign.Center,
             maxLines = 1,

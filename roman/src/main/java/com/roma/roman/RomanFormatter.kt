@@ -38,4 +38,40 @@ object RomanFormatter {
     fun formatTwoDigit(number: Int): String {
         return format(number, 2)
     }
+
+    /**
+     * Formats a range of integers as Roman numerals (e.g., "I-X").
+     * @param start Start of range (inclusive)
+     * @param endInclusive End of range (inclusive)
+     * @return Roman numeral range string
+     */
+    fun formatRange(start: Int, endInclusive: Int): String {
+        return "${format(start)}-${format(endInclusive)}"
+    }
+
+    /**
+     * Converts a Roman numeral string back to an integer.
+     * Used for accessibility (content descriptions).
+     * @param roman Roman numeral string
+     * @return Integer value, or -1 if invalid
+     */
+    fun toArabic(roman: String): Int {
+        var result = 0
+        var i = 0
+        val values = mapOf(
+            'Ⅿ' to 1000, 'Ⅾ' to 500, 'Ⅽ' to 100, 'Ⅼ' to 50, 'Ⅹ' to 10, 'Ⅴ' to 5, 'Ⅰ' to 1, 'N' to 0
+        )
+        while (i < roman.length) {
+            val current = values[roman[i]] ?: return -1
+            val next = if (i + 1 < roman.length) values[roman[i + 1]] ?: 0 else 0
+            if (current < next) {
+                result += next - current
+                i += 2
+            } else {
+                result += current
+                i++
+            }
+        }
+        return result
+    }
 }
