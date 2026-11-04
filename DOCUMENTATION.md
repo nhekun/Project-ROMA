@@ -147,14 +147,6 @@ Build requires JDK 21. Current environment has JDK 25 (JetBrains Runtime from An
 
 ---
 
-## Git / GitHub
-
-- **Local**: `D:\Tech Stuff\Project ROMA\Project ROMA`
-- **Remote**: `https://github.com/nhekun/Project-ROMA` (private)
-- **Branch**: `main` → tracks `origin/main`
-- **Ignore**: `.gradle/`, `*/build/`, `local.properties`, `cmdline-tools.zip`
-
----
 
 ## Next Steps (Stage II+)
 
