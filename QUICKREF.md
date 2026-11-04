@@ -49,6 +49,3 @@ app (entry)
 - ✅ **Serif typography system** for classical Roman aesthetic
 - ✅ **Monochrome icon tint** (white on black)
 
-## GitHub
-- Remote: `nhekun/Project-ROMA` (private)
-- Push: `git add . && git commit -m "msg" && git push`
